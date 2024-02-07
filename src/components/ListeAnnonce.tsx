@@ -13,7 +13,7 @@ const ListeAnnonce: React.FC<ContainerProps> = ({ name }) => {
             <p>
                 Liste Annonce
                 <button className="submit-button" onClick={handleButtonClick}>
-                    Voir Liste
+                    Voir Traitement
                 </button>
             </p>
         </div>

@@ -12,7 +12,7 @@ const StatutAnnonce: React.FC<ContainerProps> = ({ name }) => {
         <div className="container">
             <p>
                 <button className="submit-button" onClick={handleButtonClick}>
-                    Voir Statut
+                    Voir Traitement
                 </button>
             </p>
         </div>
