@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import AjoutAnnonce from '../components/AjoutAnnonce';
 import ListeAnnonce from '../components/ListeAnnonce';
-import StatutAnnonce from '../components/StatutAnnonce';
 import './Annonces.css';
 
 const Annonces: React.FC = () => {
@@ -27,7 +26,6 @@ const Annonces: React.FC = () => {
                 </IonHeader>
                 {activeComponent === 'ajout' && <AjoutAnnonce name="ajout" />}
                 {activeComponent === 'liste' && <ListeAnnonce name="liste" />}
-                {activeComponent === 'statut' && <StatutAnnonce name="statut" />}
                 <p>
                     <button onClick={() => handleToggle('ajout')}>Ajout Annonce</button>
                 </p>

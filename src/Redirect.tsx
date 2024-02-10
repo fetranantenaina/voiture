@@ -49,3 +49,8 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
+
+
+/*curl -X GET \ -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYW9seUBnbWFpbC5jb20iLCJpYXQiOjE3MDc1NDAxMjgsImV4cCI6MTcwNzYyNjUyOH0.JzymBGarcty-d3sjzfAjSqo_eTD0__jvCm8NH-JWNao" \ -v -L "https://vaika-ws-production.up.railway.app/v1/annonces"
+
+*/

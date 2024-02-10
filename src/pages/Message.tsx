@@ -16,7 +16,7 @@ const Message: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 <p>
-                    <strong>Liste mess</strong>
+                    <strong>Liste messages</strong>
                 </p>
             </IonContent>
         </IonPage>
