@@ -1,78 +1,60 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import Inscription from '../components/Inscription';// Importez le composant Inscription
 import './Login.css';
 
 const Login: React.FC = () => {
-    const { login } = useAuth();
-    const history = useHistory();
-    const [showLogin, setShowLogin] = useState(true); // Ajout de la variable d'état
+  const { login } = useAuth();
+  const history = useHistory();
+  const [email, setEmail] = useState(''); 
+  const [password, setPassword] = useState(''); 
 
-    const handleLogin = () => {
-        // Logique d'authentification simulée (par exemple, définir isAuthenticated sur true)
-        console.log("Simulating successful authentication");
-        login();
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://vaika-ws-production.up.railway.app/api/v1/auth/authenticate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      });
 
-        // Rediriger vers la page du tableau de bord après l'authentification réussie
+      const responseData = await response.json();
+
+      if (response.ok) {
+        console.log("Authentication successful");
+
+        localStorage.setItem('accessToken', responseData.access_token);
+
         history.push('/dashboard');
-    };
+      } else {
+        console.log("Authentication failed");
+      }
+    } catch (error) {
+      console.error("Error during authentication:", error);
 
-    const handleSwitch = () => {
-        // Inverser la valeur de showLogin lorsqu'on clique sur le bouton "Inscription"
-        setShowLogin(!showLogin);
-    };
-/*
+    }
+  };
+
   return (
     <div className="container">
       <div className="form">
-        <h1>{showLogin ? 'Login' : 'Inscription'}</h1>
+        <h1>Login Page</h1>
         <div className="input-group">
-          <input type="text" placeholder="Nom d'utilisateur" />
+          <input type="email" placeholder="Nom d'utilisateur" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="input-group">
-          <input type="password" placeholder="Mot de passe" />
+          <input type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <div className="button-group">
-          <button className="login-btn" onClick={handleLogin}>
-            {showLogin ? 'Login' : 'Inscription'}
-          </button>
-          <button className="switch-btn" onClick={handleSwitch}>
-            {showLogin ? 'Inscription' : 'Retour à Login'}
-          </button>
+          <button onClick={handleLogin}>Login</button>
         </div>
       </div>
     </div>
-  ); */
-    return (
-        <div className="container">
-            <div className="form">
-            <h1>{showLogin ? 'Login Page' : 'Inscription Page'}</h1>
-            {showLogin ? (
-                <>
-                    <div className="input-group">
-                        <input type="text" placeholder="Nom d'utilisateur" />
-                    </div>
-                    <div className="input-group">
-                        <input type="password" placeholder="Mot de passe" />
-                    </div>
-                    <div className="button-group">
-                    <button onClick={handleLogin}>Login</button>
-                    </div>
-                </>
-            ) : (
-                // Afficher le composant Inscription lorsque showLogin est false
-                <Inscription name='inscription'/>
-            )}
-            <p>
-                {/* Bouton pour basculer entre Login et Inscription */}
-                <button onClick={handleSwitch}>
-                    {showLogin ? 'Inscription' : 'Retour à Login'}
-                </button>
-            </p>
-        </div>
-        </div>
-    );
+  );
 };
 
 export default Login;

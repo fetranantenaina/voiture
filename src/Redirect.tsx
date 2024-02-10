@@ -2,16 +2,42 @@
 
 import { useAuth } from './AuthContext';
 import Accueil from './pages/Accueil';
-
+import { useEffect } from 'react'; 
 
 const DashboardPage = () => {
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated } = useAuth();
 
     const handleLogout = () => {
-        // Logique de déconnexion
-        // Utilisez le contexte pour définir l'état d'authentification
-        logout();
+        const accessToken = localStorage.getItem('accessToken');
+
+
+        if (accessToken) {
+            fetch('http://vaika-ws-production.up.railway.app/api/v1/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        localStorage.removeItem('accessToken');
+                        console.log('Logout successful');
+                    } else {
+                        console.error('Logout failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during logout:', error);
+                });
+        }
     };
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            handleLogout();
+        }
+    }, []); 
 
     return (
         <div>
